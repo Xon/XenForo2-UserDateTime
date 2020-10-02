@@ -6,6 +6,7 @@ Adds two new User Custom Fields:
 
 1. Preferred Date Format
   - All (non-custom) formats from the admin panel
+  - Full-year m/d/y and d/m/y formats
   - ISO 8601 YYYY-MM-DD format
 2. Preferred Time Format
   - 12 and 24 hour formats

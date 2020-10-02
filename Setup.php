@@ -41,6 +41,8 @@ class Setup extends AbstractSetup
 				'day_month_year' => '29 August 2020',
 				'dmy' => '29/8/20',
 				'mdy' => '8/29/20',
+				'dmyf' => '29/8/2020',
+				'mdyf' => '8/29/2020',
 				'ymd' => '2020-08-29'
 			];
 

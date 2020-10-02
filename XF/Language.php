@@ -17,6 +17,8 @@ class Language extends XFCP_Language
 		'day_month_year' => 'j F Y',
 		'dmy' => 'j/n/y',
 		'mdy' => 'n/j/y',
+		'dmyf' => 'j/n/Y',
+		'mdyf' => 'n/j/Y',
 		'ymd' => 'Y-m-d'
 	];
 	private $cw_time_formats = [
