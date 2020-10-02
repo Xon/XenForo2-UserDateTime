@@ -10,7 +10,8 @@
     "support_url": "",
     "extra_urls": [],
     "require": [
-        "XF": [2010070, "XenForo 2.1.0+"]
+        "XF": [2010070, "XenForo 2.1.0+"],
+        "php": ["7.0.0", "PHP 7.0.0+"]
     ],
     "icon": "fa-user-clock"
 }
