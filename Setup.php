@@ -12,6 +12,7 @@ class Setup extends AbstractSetup
 		// Check each individually in case uninstall and reinstall is done to reset a list
 		if (!\XF::em()->find('XF:UserField', 'cw_user_date'))
 		{
+			/** @var \XF\Entity\UserField $userDate */
 			$userDate = \XF::em()->create('XF:UserField');
 			$userDate->field_id = 'cw_user_date';
 			$userDate->display_group = 'preferences';
@@ -50,6 +51,7 @@ class Setup extends AbstractSetup
 		}
 		if (!\XF::em()->find('XF:UserField', 'cw_user_time'))
 		{
+			/** @var \XF\Entity\UserField $userTime */
 			$userTime = \XF::em()->create('XF:UserField');
 			$userTime->field_id = 'cw_user_time';
 			$userTime->display_group = 'preferences';
