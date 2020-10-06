@@ -30,11 +30,12 @@ class Language extends XFCP_Language
 	{
 		// Fetch the visitor
 		$visitor = \XF::visitor();
+		$profile = $visitor->Profile;
 		// Check if they're logged in
-		if ($visitor->user_id)
+		if ($visitor->user_id && $profile)
 		{
 			// Look for our settings in their custom fields
-			$customFields = $visitor->Profile->custom_fields;
+			$customFields = $profile->custom_fields;
 			// We only override each of these if the value is set to something we have a format string for
 			// Otherwise we leave the relevant setting untouched so things can fall through
 			if (isset($customFields->cw_user_date) && isset($this->cw_date_formats[$customFields->cw_user_date]))
