@@ -5,11 +5,11 @@ Allows users to override the language-level date and time format settings.
 Adds two new User Custom Fields:
 
 1. Preferred Date Format
-  - All (non-custom) formats from the admin panel
-  - Full-year m/d/y and d/m/y formats
-  - ISO 8601 YYYY-MM-DD format
+    - All (non-custom) formats from the admin panel
+    - Full-year m/d/y and d/m/y formats
+    - ISO 8601 YYYY-MM-DD format
 2. Preferred Time Format
-  - 12 and 24 hour formats
+    - 12 and 24 hour formats
 
 They are both optional and apply individually. A user who does not select an option will get the setting defined in their selected language for that field.
 
