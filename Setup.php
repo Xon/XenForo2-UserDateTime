@@ -30,6 +30,7 @@ class Setup extends AbstractSetup
 			$userDate->user_editable = 'yes';
 			$userDate->viewable_message = false;
 			$userDate->viewable_profile = false;
+			$userDate->display_order = $this->getCustomFieldLastDisplay() + 10;
 
 			// Need a new phrase for the title
 			$dateTitle = $userDate->getMasterPhrase(true);
@@ -73,6 +74,7 @@ class Setup extends AbstractSetup
 			$userTime->user_editable = 'yes';
 			$userTime->viewable_message = false;
 			$userTime->viewable_profile = false;
+			$userTime->display_order = $this->getCustomFieldLastDisplay() + 10;
 
 			// Need a new phrase for the title
 			$timeTitle = $userTime->getMasterPhrase(true);
@@ -97,5 +99,10 @@ class Setup extends AbstractSetup
 	public function uninstallStep1()
 	{
 		// Leaving the custom user fields in place intentionally, so no uninstall changes needed at this time
+	}
+
+	protected function getCustomFieldLastDisplay(): int
+	{
+		return (int)\XF::db()->fetchOne('select max(display_order) from xf_user_field');
 	}
 }
