@@ -38,11 +38,11 @@ class Language extends XFCP_Language
 			$customFields = $profile->custom_fields;
 			// We only override each of these if the value is set to something we have a format string for
 			// Otherwise we leave the relevant setting untouched so things can fall through
-			if (isset($customFields->cw_user_date) && isset($this->cw_date_formats[$customFields->cw_user_date]))
+			if (!empty($customFields->cw_user_date) && !empty($this->cw_date_formats[$customFields->cw_user_date]))
 			{
 				$options['date_format'] = $this->cw_date_formats[$customFields->cw_user_date];
 			}
-			if (isset($customFields->cw_user_time) && isset($this->cw_time_formats[$customFields->cw_user_time]))
+			if (!empty($customFields->cw_user_time) && !empty($this->cw_time_formats[$customFields->cw_user_time]))
 			{
 				$options['time_format'] = $this->cw_time_formats[$customFields->cw_user_time];
 			}
