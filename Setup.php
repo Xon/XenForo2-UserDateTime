@@ -3,10 +3,17 @@
 namespace CmptrWz\UserDateTime;
 
 use XF\AddOn\AbstractSetup;
+use XF\AddOn\StepRunnerInstallTrait;
+use XF\AddOn\StepRunnerUninstallTrait;
+use XF\AddOn\StepRunnerUpgradeTrait;
 
 class Setup extends AbstractSetup
 {
-	public function install(array $stepParams = [])
+	use StepRunnerInstallTrait;
+	use StepRunnerUpgradeTrait;
+	use StepRunnerUninstallTrait;
+
+	public function installStep1()
 	{
 		// Add our custom user fields, but only if they don't already exist.
 		// Check each individually in case uninstall and reinstall is done to reset a list
@@ -36,19 +43,23 @@ class Setup extends AbstractSetup
 
 			// The keys in this list need to match those in the Language.php extension
 			$userDate->field_choices = [
-				'mon_day_year' => 'Aug 29, 2020',
+				'mon_day_year'   => 'Aug 29, 2020',
 				'month_day_year' => 'August 29, 2020',
-				'day_mon_year' => '29 Aug 2020',
+				'day_mon_year'   => '29 Aug 2020',
 				'day_month_year' => '29 August 2020',
-				'dmy' => '29/8/20',
-				'mdy' => '8/29/20',
-				'dmyf' => '29/8/2020',
-				'mdyf' => '8/29/2020',
-				'ymd' => '2020-08-29'
+				'dmy'            => '29/8/20',
+				'mdy'            => '8/29/20',
+				'dmyf'           => '29/8/2020',
+				'mdyf'           => '8/29/2020',
+				'ymd'            => '2020-08-29'
 			];
 
 			$userDate->save();
 		}
+	}
+
+	public function installStep2()
+	{
 		if (!\XF::em()->find('XF:UserField', 'cw_user_time'))
 		{
 			/** @var \XF\Entity\UserField $userTime */
@@ -83,12 +94,7 @@ class Setup extends AbstractSetup
 		}
 	}
 
-	public function upgrade(array $stepParams = [])
-	{
-		// No upgrade changes needed at this time.
-	}
-
-	public function uninstall(array $stepParams = [])
+	public function uninstallStep1()
 	{
 		// Leaving the custom user fields in place intentionally, so no uninstall changes needed at this time
 	}
