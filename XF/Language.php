@@ -25,15 +25,20 @@ class Language extends XFCP_Language
 		'12h' => 'g:i A',
 		'24h' => 'H:i'
 	];
+
+	static $cwSeenUserProfile = [];
+
 	// To actually change the date and time formats, we just need to override initialization.
 	public function __construct($id, array $options, AbstractAdapter $db, $groupPath, array $phrases = null)
 	{
 		// Fetch the visitor
 		$visitor = \XF::visitor();
+		$userId = $visitor->user_id;
 		$profile = $visitor->Profile;
 		// Check if they're logged in
-		if ($visitor->user_id && $profile)
+		if ($userId && empty(self::$cwSeenUserProfile[$userId]) && $profile)
 		{
+			self::$cwSeenUserProfile[$userId] = true;
 			// Look for our settings in their custom fields
 			$customFields = $profile->custom_fields;
 			// We only override each of these if the value is set to something we have a format string for
