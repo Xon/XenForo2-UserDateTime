@@ -13,96 +13,70 @@ class Setup extends AbstractSetup
 	use StepRunnerUpgradeTrait;
 	use StepRunnerUninstallTrait;
 
-	public function installStep1()
+	public function installStep1(): void
 	{
 		// Add our custom user fields, but only if they don't already exist.
 		// Check each individually in case uninstall and reinstall is done to reset a list
-		if (!\XF::em()->find('XF:UserField', 'cw_user_date'))
-		{
-			/** @var \XF\Entity\UserField $userDate */
-			$userDate = \XF::em()->create('XF:UserField');
-			$userDate->field_id = 'cw_user_date';
-			$userDate->display_group = 'preferences';
-			$userDate->field_type = 'select';
-			$userDate->moderator_editable = false;
-			$userDate->required = false;
-			$userDate->show_registration = true;
-			$userDate->user_editable = 'yes';
-			$userDate->viewable_message = false;
-			$userDate->viewable_profile = false;
-			$userDate->display_order = $this->getCustomFieldLastDisplay() + 10;
-
-			// Need a new phrase for the title
-			$dateTitle = $userDate->getMasterPhrase(true);
-			$dateTitle->phrase_text = 'Preferred Date Format';
-			$userDate->addCascadedSave($dateTitle);
-
-			// And another for the description
-			$dateDesc = $userDate->getMasterPhrase(false);
-			$dateDesc->phrase_text = '';
-			$userDate->addCascadedSave($dateDesc);
-
-			// The keys in this list need to match those in the Language.php extension
-			$userDate->field_choices = [
-				'mon_day_year'   => 'Aug 29, 2020',
-				'month_day_year' => 'August 29, 2020',
-				'day_mon_year'   => '29 Aug 2020',
-				'day_month_year' => '29 August 2020',
-				'dmy'            => '29/8/20',
-				'mdy'            => '8/29/20',
-				'dmyf'           => '29/8/2020',
-				'mdyf'           => '8/29/2020',
-				'ymd'            => '2020-08-29'
-			];
-
-			$userDate->save();
-		}
+		$this->addSelectCustomField('cw_user_date', 'Preferred Date Format', '', [
+			'mon_day_year'   => 'Aug 29, 2020',
+			'month_day_year' => 'August 29, 2020',
+			'day_mon_year'   => '29 Aug 2020',
+			'day_month_year' => '29 August 2020',
+			'dmy'            => '29/8/20',
+			'mdy'            => '8/29/20',
+			'dmyf'           => '29/8/2020',
+			'mdyf'           => '8/29/2020',
+			'ymd'            => '2020-08-29',
+		]);
 	}
 
-	public function installStep2()
+	public function installStep2(): void
 	{
-		if (!\XF::em()->find('XF:UserField', 'cw_user_time'))
-		{
-			/** @var \XF\Entity\UserField $userTime */
-			$userTime = \XF::em()->create('XF:UserField');
-			$userTime->field_id = 'cw_user_time';
-			$userTime->display_group = 'preferences';
-			$userTime->field_type = 'select';
-			$userTime->moderator_editable = false;
-			$userTime->required = false;
-			$userTime->show_registration = true;
-			$userTime->user_editable = 'yes';
-			$userTime->viewable_message = false;
-			$userTime->viewable_profile = false;
-			$userTime->display_order = $this->getCustomFieldLastDisplay() + 10;
-
-			// Need a new phrase for the title
-			$timeTitle = $userTime->getMasterPhrase(true);
-			$timeTitle->phrase_text = 'Preferred Time Format';
-			$userTime->addCascadedSave($timeTitle);
-
-			// And another for the description
-			$timeDesc = $userTime->getMasterPhrase(false);
-			$timeDesc->phrase_text = '';
-			$userTime->addCascadedSave($timeDesc);
-
-			// The keys in this list need to match those in the Language.php extension
-			$userTime->field_choices = [
-				'12h' => '7:30 PM',
-				'24h' => '19:30'
-			];
-
-			$userTime->save();
-		}
+		$this->addSelectCustomField('cw_user_time', 'Preferred Time Format', '', [
+			'12h' => '7:30 PM',
+			'24h' => '19:30',
+		]);
 	}
 
-	public function uninstallStep1()
+	public function uninstallStep1(): void
 	{
 		// Leaving the custom user fields in place intentionally, so no uninstall changes needed at this time
 	}
 
-	protected function getCustomFieldLastDisplay(): int
+	protected function addSelectCustomField(string $name, string $title, string $description, array $choices): \XF\Entity\UserField
 	{
-		return (int)\XF::db()->fetchOne('select max(display_order) from xf_user_field');
+		$field = \XF::em()->find('XF:UserField', $name);
+		if ($field === null)
+		{
+			/** @var \XF\Entity\UserField $field */
+			$field = \XF::em()->create('XF:UserField');
+			$field->field_id = $name;
+			$field->display_group = 'preferences';
+			$field->field_type = 'select';
+			$field->moderator_editable = false;
+			$field->required = false;
+			$field->show_registration = true;
+			$field->user_editable = 'yes';
+			$field->viewable_message = false;
+			$field->viewable_profile = false;
+			$field->display_order = 10 + (int)\XF::db()->fetchOne('select max(display_order) from xf_user_field');
+
+			// Need a new phrase for the title
+			$timeTitle = $field->getMasterPhrase(true);
+			$timeTitle->phrase_text = $title;
+			$field->addCascadedSave($timeTitle);
+
+			// And another for the description
+			$timeDesc = $field->getMasterPhrase(false);
+			$timeDesc->phrase_text = $description;
+			$field->addCascadedSave($timeDesc);
+
+			// The keys in this list need to match those in the Language.php extension
+			$field->field_choices = $choices;
+
+			$field->save();
+		}
+
+		return $field;
 	}
 }
