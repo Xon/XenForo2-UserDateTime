@@ -1,0 +1,9 @@
+{
+    "additional_files": [],
+    "minify": [],
+    "exec": [
+        "mv _build/upload/src/addons/{addon_id}/*.md _build/",
+        "rm -rf _build/upload/src/addons/{addon_id}/.git*",
+        "rm -rf _build/upload/src/addons/{addon_id}/.editorconfig"
+    ]
+}
