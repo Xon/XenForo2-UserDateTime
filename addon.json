@@ -2,8 +2,8 @@
     "legacy_addon_id": "",
     "title": "User Date/Time Format Settings",
     "description": "Allow users to choose individual Date and Time Formats",
-    "version_id": 1000370,
-    "version_string": "1.0.3",
+    "version_id": 1001000,
+    "version_string": "1.1.0",
     "dev": "CmptrWz",
     "dev_url": "",
     "faq_url": "",
@@ -11,12 +11,12 @@
     "extra_urls": [],
     "require": {
         "XF": [
-            2010070,
-            "XenForo 2.1.0+"
+            2020070,
+            "XenForo 2.2.0+"
         ],
         "php": [
-            "7.0.0",
-            "PHP 7.0.0+"
+            "7.2.0",
+            "PHP 7.2.0+"
         ]
     },
     "icon": "fa-user-clock"
