@@ -25,7 +25,7 @@ class Language extends XFCP_Language
 		'12h' => 'g:i A',
 		'24h' => 'H:i'
 	];
-
+	/** @var array<int,bool> */
 	protected static $cwSeenUserProfile = [];
 
 	// To actually change the date and time formats, we just need to override initialization.
@@ -38,6 +38,7 @@ class Language extends XFCP_Language
 		// Check if they're logged in
 		if ($userId !== 0 && $profile !== null && array_key_exists($userId, static::$cwSeenUserProfile))
 		{
+			// Compatibility fix when Custom Field Permissions add-on is installed and XenForo master data is rebuilt
 			static::$cwSeenUserProfile[$userId] = true;
 			// Look for our settings in their custom fields
 			$customFields = $profile->custom_fields;
