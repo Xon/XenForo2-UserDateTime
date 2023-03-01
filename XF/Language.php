@@ -36,7 +36,7 @@ class Language extends XFCP_Language
 		$userId = (int)$visitor->user_id;
 		$profile = $visitor->Profile;
 		// Check if they're logged in
-		if ($userId !== 0 && $profile !== null && array_key_exists($userId, static::$cwSeenUserProfile))
+		if ($userId !== 0 && $profile !== null && !array_key_exists($userId, static::$cwSeenUserProfile))
 		{
 			// Compatibility fix when Custom Field Permissions add-on is installed and XenForo master data is rebuilt
 			static::$cwSeenUserProfile[$userId] = true;
