@@ -29,7 +29,7 @@ class Language extends XFCP_Language
 	protected static $cwSeenUserProfile = [];
 
 	// To actually change the date and time formats, we just need to override initialization.
-	public function __construct($id, array $options, AbstractAdapter $db, $groupPath, array $phrases = null)
+	public function __construct($id, array $options, AbstractAdapter $db, $groupPath, ?array $phrases = null)
 	{
 		// Fetch the visitor
 		$visitor = \XF::visitor();
